@@ -1,1 +1,17 @@
 I have more Hello world
+
+singularity exec --nv -B /apps2/cuda/10.0/lib64:/home/extraLibs/cuda,/apps2/cudnn/7.1.2/cuda/lib64:/home/extraLibs/cudnn /apps2/singularity/general/general_python3 python3
+
+module load cuda/10.0 cudnn/7.4.2 singularity/3.1
+tfSSB=/apps2/singularity/general/general_python3
+singularity exec --nv -B /apps2/cuda/10.0/lib64:/home/extraLibs/cuda,/apps2/cudnn/7.4.2/cuda/lib64:/home/extraLibs/cudnn $tfSSB python3 breastCancerClassify2.py MBtrain
+
+
+//Check GPU
+from tensorflow.python.client import device_lib
+
+def get_available_gpus():
+    local_device_protos = device_lib.list_local_devices()
+    return [x.name for x in local_device_protos if x.device_type == 'GPU']
+
+get_available_gpus()
